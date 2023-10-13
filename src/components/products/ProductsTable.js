@@ -21,7 +21,7 @@ import {
   Input,
   Image,
   Text,
-  Center,
+  useToast,
   HStack,
   Box,
 } from "@chakra-ui/react";
@@ -33,11 +33,12 @@ import { useState } from "react";
 import { editProductDetails } from "../../redux/products/ProductsActions";
 import { useDispatch } from "react-redux";
 import { getProducts } from "../../redux/products/ProductsActions";
-import { updateProductStatus } from "../../redux/products/ProductsActions";
+
+
 export default function ProductsTable() {
   const { productsData } =
     useSelector((state) => state.product, shallowEqual) || {};
-  
+  const toast = useToast();
   const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editedData, setEditedData] = useState({
@@ -65,7 +66,13 @@ export default function ProductsTable() {
   const closeEditModal = () => {
     setIsEditModalOpen(false);
   };
-
+  const handleToast = (message, isGood) => {
+    toast({
+      title: message,
+      status: isGood ? "success" : "error",
+      position: "top",
+    });
+  };
 
   const handleEditSubmit = () => {
     let statusText = "";
@@ -76,6 +83,13 @@ export default function ProductsTable() {
     }else if(productData.quantity !== editedData.quantity){
       statusText = "Quantity updated"
     }
+
+    if(editedData.price < 1){
+      handleToast("Price can not be less than or equal to 0",false)
+    }else if(editedData.quantity < 1){
+      handleToast("Quantity can not be less than or equal to 0",false)
+    }
+
     dispatch(
       editProductDetails({
         id: editedData.id,
@@ -83,7 +97,10 @@ export default function ProductsTable() {
         quantity: editedData.quantity,
         total: editedData.price * editedData.quantity,
         status:statusText ? statusText : productData.status
-      },()=>{dispatch(getProducts())},()=>{dispatch(getProducts())})
+      },()=>{
+        handleToast('edited successfully',true)
+        dispatch(getProducts())
+      },()=>{dispatch(getProducts())})
     );
   
     

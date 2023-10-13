@@ -50,9 +50,13 @@ export default function ProductStatus({ product, openEditModal }) {
           status: "approved",
         },
         () => {
+          handleToast("status updated successfully", true);
           dispatch(getProducts());
         },
-        () => {
+        (error) => {
+          if (!error.code.includes("ERR_NETWORK")) {
+            handleToast("something went wrong", false);
+          }
           dispatch(getProducts());
         }
       )
@@ -71,12 +75,13 @@ export default function ProductStatus({ product, openEditModal }) {
           status: "missing",
         },
         () => {
+          handleToast("status updated successfully", true);
           dispatch(getProducts());
         },
-        () => {
-          dispatch(getProducts());
-        },
-        () => {
+        (error) => {
+          if (!error.code.includes("ERR_NETWORK")) {
+            handleToast("something went wrong", false);
+          }
           dispatch(getProducts());
         }
       )
@@ -92,9 +97,13 @@ export default function ProductStatus({ product, openEditModal }) {
           status: "missing-urgent",
         },
         () => {
+          handleToast("status updated successfully", true);
           dispatch(getProducts());
         },
-        () => {
+        (error) => {
+          if (!error.code.includes("ERR_NETWORK")) {
+            handleToast("something went wrong", false);
+          }
           dispatch(getProducts());
         }
       )
@@ -183,22 +192,14 @@ export default function ProductStatus({ product, openEditModal }) {
               <Button
                 onClick={setAsMissing}
                 colorScheme={
-                   product.status !== "missing-urgent"
-                    ? "green"
-                    : "teal"
+                  product.status !== "missing-urgent" ? "green" : "teal"
                 }
               >
-                {product.status !== "missing"
-                  ? "Yes"
-                  : "No"}
+                {product.status !== "missing" ? "Yes" : "No"}
               </Button>
               <Button
                 onClick={setAsUrgentMissing}
-                colorScheme={
-                 product.status === "missing"
-                    ? "teal"
-                    : "gray"
-                }
+                colorScheme={product.status === "missing" ? "teal" : "gray"}
               >
                 {product.status === "missing" ? "Yes" : "No"}
               </Button>
