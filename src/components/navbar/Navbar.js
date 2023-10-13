@@ -48,7 +48,7 @@ export default function Navbar() {
   );
 
   return (
-    <Flex as="header" display="flex" bg={"rgb(46, 125, 50)"} p="1rem 5rem">
+    <Flex as="header" display="flex" bg={"rgb(46, 125, 50)"} p="1rem 5rem" >
       <Box as="nav" flex="1">
         <Stack py={2} direction="row" align="center">
           <IconButton
@@ -85,7 +85,7 @@ export default function Navbar() {
               ml={2}
               display="inline-block"
             >
-              4
+              6
             </Badge>
             <IconButton
               colorScheme="transperent"
