@@ -1,6 +1,6 @@
 # Reeco App Using ReactJs and Redux
 
-<a href="https://gifyu.com/image/S64lx"><img src="https://gifyu.com/image/S64lx" alt="SWDFP.gif" border="0" /></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/ftxPpm8/ezgif-com-video-to-gif.gif" alt="ezgif-com-video-to-gif" border="0"></a>
 ## How to run the project on local
 1. Clone the repository and use the 'yarn install' command in terminal
 2. run the command 'yarn start' in the terminal to start the app at port 3000.
