@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    serverUrl:"http://localhost:3001"
+    serverUrl:"https://ruby-cocoon-fez.cyclic.app"
 }

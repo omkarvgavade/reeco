@@ -4,7 +4,7 @@ import {
   Stack,
   Tooltip,
   useDisclosure,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
@@ -31,25 +31,26 @@ export default function ProductStatus({ product, openEditModal }) {
   const statusText = product.status;
   const statusColor = generateStatusColor(product.status);
 
-
-  
-  const handleToast =(message,isGood)=> {
+  const handleToast = (message, isGood) => {
     toast({
       title: message,
-      status: isGood ? 'success':'error',
+      status: isGood ? "success" : "error",
       position: "top",
     });
-  }
+  };
   const approveHandler = () => {
-    if(product.status === "approved") {
-        handleToast("Product is already approved",false)
-        return;
+    if (product.status === "approved") {
+      handleToast("Product is already approved", false);
+      return;
     }
     dispatch(
       updateProductStatus(
         {
           id: product.id,
           status: "approved",
+        },
+        () => {
+          dispatch(getProducts());
         },
         () => {
           dispatch(getProducts());
@@ -71,6 +72,12 @@ export default function ProductStatus({ product, openEditModal }) {
         },
         () => {
           dispatch(getProducts());
+        },
+        () => {
+          dispatch(getProducts());
+        },
+        () => {
+          dispatch(getProducts());
         }
       )
     );
@@ -83,6 +90,9 @@ export default function ProductStatus({ product, openEditModal }) {
         {
           id: product.id,
           status: "missing-urgent",
+        },
+        () => {
+          dispatch(getProducts());
         },
         () => {
           dispatch(getProducts());
@@ -124,7 +134,13 @@ export default function ProductStatus({ product, openEditModal }) {
             icon={<CheckIcon />}
           />
         </Tooltip>
-        <Tooltip label={product.status === 'missing' ? "Flag as Missing urgent":"Flag as Missing"}>
+        <Tooltip
+          label={
+            product.status === "missing"
+              ? "Flag as Missing urgent"
+              : "Flag as Missing"
+          }
+        >
           <IconButton
             size="sm"
             onClick={missingHandler}
@@ -164,11 +180,27 @@ export default function ProductStatus({ product, openEditModal }) {
               Invivid" urgent?
             </AlertDialogBody>
             <AlertDialogFooter gap="1rem">
-              <Button onClick={setAsMissing} colorScheme={product.status === "missing" ? 'gray' :'green'}>
-                {product.status === "missing" ? 'No' :'Yes'}
+              <Button
+                onClick={setAsMissing}
+                colorScheme={
+                   product.status !== "missing-urgent"
+                    ? "green"
+                    : "teal"
+                }
+              >
+                {product.status !== "missing"
+                  ? "Yes"
+                  : "No"}
               </Button>
-              <Button onClick={setAsUrgentMissing} colorScheme={product.status === "missing-urgent" ? 'gray' :'green'}>
-                {product.status === "missing-urgent" ? 'No' :'Yes'}
+              <Button
+                onClick={setAsUrgentMissing}
+                colorScheme={
+                 product.status === "missing"
+                    ? "teal"
+                    : "gray"
+                }
+              >
+                {product.status === "missing" ? "Yes" : "No"}
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
