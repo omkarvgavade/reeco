@@ -83,7 +83,7 @@ export default function ProductsTable() {
         quantity: editedData.quantity,
         total: editedData.price * editedData.quantity,
         status:statusText ? statusText : productData.status
-      },()=>{dispatch(getProducts())})
+      },()=>{dispatch(getProducts())},()=>{dispatch(getProducts())})
     );
   
     
@@ -123,7 +123,6 @@ export default function ProductsTable() {
                 </Td>
                 <Td fontSize="sm">₹ {row.price * row.quantity}</Td>
                 
-                <Td fontSize="sm">₹ {(row.price * row.quantity).toFixed(2)}</Td>
                 <Td bgColor="gray.50" fontSize="sm">
                   <ProductStatus openEditModal={openEditModal} product={row} />
                 </Td>

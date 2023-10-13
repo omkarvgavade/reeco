@@ -23,7 +23,6 @@ export const asyncActionCreator =(actionType)=>{
 
     const action=(axiosConfig,successCallback,errorCallback) =>((dispatch)=>{
          dispatch(pending());
-         
          return axios(axiosConfig).then((response)=>{
             dispatch(fulfilled(response.data));
             if(successCallback)successCallback(response.data)
